@@ -10,8 +10,9 @@ import org.springframework.context.annotation.ImportRuntimeHints;
 import org.springframework.guice.annotation.EnableGuiceModules;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.name.Named;
 
-@SpringBootApplication
+@SpringBootApplication(proxyBeanMethods = false)
 @EnableGuiceModules
 @ImportRuntimeHints(DemoRuntimeHints.class)
 public class DemoApplication {
@@ -44,6 +45,9 @@ class DemoRuntimeHints implements RuntimeHintsRegistrar {
 		hints.reflection().registerType(Boolean.class, MemberCategory.INVOKE_DECLARED_METHODS);
 		hints.reflection().registerType(Byte.class, MemberCategory.INVOKE_DECLARED_METHODS);
 		hints.reflection().registerType(Short.class, MemberCategory.INVOKE_DECLARED_METHODS);
+		hints.reflection().registerType(Named.class, MemberCategory.INTROSPECT_DECLARED_METHODS);
+		hints.reflection().registerType(MyService.class, MemberCategory.INVOKE_DECLARED_METHODS, MemberCategory.INVOKE_DECLARED_CONSTRUCTORS);
+		hints.reflection().registerType(MyModule.class, MemberCategory.INVOKE_DECLARED_METHODS, MemberCategory.INVOKE_DECLARED_CONSTRUCTORS);
 	}
 	
 }
